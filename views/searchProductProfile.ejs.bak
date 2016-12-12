@@ -1,0 +1,115 @@
+<html ng-app="amazon">
+<head>
+<title>Customer's Search Page</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script
+	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script
+	src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+  <style>
+    /* Remove the navbar's default rounded borders and increase the bottom margin */ 
+    .navbar {
+      margin-bottom: 50px;
+      border-radius: 0;
+    }
+        /* Remove the jumbotron's default bottom margin */ 
+     .jumbotron {
+      margin-bottom: 0;
+    }
+   
+    /* Add a gray background color and some padding to the footer */
+    footer {
+	  background-color: #f2f2f2;
+      padding: 25px;
+    }
+  </style>
+ <script src="/angularjs/amazonStart.js"></script>
+<script src="/angularjs/customerProfileController.js"></script>
+</head>
+<body ng-controller="customerProfileController">
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+    <img src=".\images\logo.png" alt="Image">
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="/customerProfile">Home</a></li>
+        <li><a href="#">Products</a></li>
+        <li><a href="#">Reviews</a></li>
+        <li><a href="#">Histroy</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#"><span class="glyphicon glyphicon-user"></span> Your Account</a></li>
+        <li><a href="#"><span class="glyphicon glyphicon-shopping-cart"></span> Cart</a></li>
+      </ul>
+    </div>
+  </div>
+  <form class="navbar-form navbar-left" role="search" width=1200px action="/searchProduct" method="post">
+					<div class="form-group input-group">
+						<input type="text" class="form-control" placeholder="Search AmazonFresh" ng-model="searchString" name = "searchString">
+						<span class="input-group-btn">
+							<button class="btn " name="submit" type="submit" value="serchProductInfo">
+								Go
+							</button>
+						</span>
+					</div>
+				</form> 
+	<form class="navbar-form navbar-right" role="search" width=1200px>
+					<div class="form-group input-group">
+						<span class="input-group-btn">
+							<button class="btn " type="button" ng-click="checkout();">
+								Checkout
+							</button>
+						</span>
+					</div>
+				</form>
+</nav>
+
+<div class="container">   
+  <div class="row">
+<% for(var j=0; j < searchProductResults.length; j++) { %>	 
+    <div class="col-sm-3">
+      <div class="panel panel-primary">
+        <div class="panel-heading"><%= searchProductResults[j].PRODUCT_NAME %><br><%= searchProductResults[j].PRODUCT_DESCRIPTION %></div>
+        <div class="panel-body"><a href='' ng-click="displayIndividualProduct('<%=searchProductResults[j].PRODUCT_ID  %>','<%=searchProductResults[j].PRODUCT_NAME  %>','<%=searchProductResults[j].PRODUCT_PRICE  %>','<%=searchProductResults[j].PRODUCT_QTY  %>','<%=searchProductResults[j].PRODUCT_DESCRIPTION  %>','<%=searchProductResults[j].PROD_CAT  %>','<%=searchProductResults[j].PRODUCT_AVG_RATINGS  %>','<%=searchProductResults[j].FARMER_ID  %>');"><img src=".\images\333.jpg" class="img-responsive" style="width:50%" alt="Image"></a></div>		                       
+        <div class="panel-footer">Qty: <select name="productQuantity" ng-model="productQuantity" required >
+        	<% for(var k=0; k < searchProductResults[j].PRODUCT_QTY; k++) { %>       	
+        	<option value="<%= (k+1) %>"><%= (k+1) %></option>
+        	<% } %> 
+        	</select>&nbsp;: Only <%= searchProductResults[j].PRODUCT_QTY %> in stock
+        	<br/>
+        	<button ng-click="addProductToCart('<%=searchProductResults[j].PRODUCT_ID  %>','<%=searchProductResults[j].PRODUCT_NAME  %>','<%=searchProductResults[j].PRODUCT_PRICE  %>','<%=searchProductResults[j].FARMER_ID  %>');"><%= searchProductResults[j].PRODUCT_PRICE %>$ per lb</button>
+        </div>	
+      </div>
+    </div>
+<% } %> 
+  </div>
+</div><br>
+<br><br>
+
+<footer class="container-fluid text-center">
+  <p>AmzonFresh Copyright</p>  
+  <form class="form-inline">Get deals:
+    <input type="email" class="form-control" size="50" placeholder="Email Address">
+    <button type="button" class="btn btn-danger">Sign Up</button>
+  </form>
+</footer>
+	
+</body>
+</html>

@@ -1,0 +1,147 @@
+<html ng-app="amazon">
+<head>
+<title>Customer's Home page</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script
+	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script
+	src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+  <style>
+    /* Remove the navbar's default rounded borders and increase the bottom margin */ 
+    .navbar {
+      margin-bottom: 50px;
+      border-radius: 0;
+    }
+        /* Remove the jumbotron's default bottom margin */ 
+     .jumbotron {
+      margin-bottom: 0;
+    }
+   
+    /* Add a gray background color and some padding to the footer */
+    footer {
+	  background-color: #f2f2f2;
+      padding: 25px;
+    }
+  </style>
+<script src="/angularjs/amazonStart.js"></script>
+<script src="/angularjs/customerProfileController.js"></script>
+</head>
+<body ng-controller="customerProfileController">
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+    <img src=".\images\logo.png" alt="Image">
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="/customerProfile">Home</a></li>
+        <li><a href="#">Products</a></li>
+        <li><a href="#">Reviews</a></li>
+        <li><a href="#">Histroy</a></li>
+        <li><a href="#">Log Out</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+         <li><a href="deleteCustomer">Deactivate My Account</a></li>
+      </ul>
+    </div>
+  </div>
+  <form class="navbar-form navbar-left" role="search" width=1200px action="/searchProduct" method="post">
+					<div class="form-group input-group">
+						<input type="text" class="form-control" placeholder="Search AmazonFresh" ng-model="searchString" name = "searchString">
+						<span class="input-group-btn">
+							<button class="btn " name="submit" type="submit" value="serchProductInfo">
+								Go
+							</button>
+						</span>
+					</div>
+				</form> 
+	<form class="navbar-form navbar-right" role="search" width=1200px>
+					<div class="form-group input-group">
+						<span class="input-group-btn">
+							<button class="btn " type="button" ng-click="checkout();">
+								Checkout
+							</button>
+						</span>
+					</div>
+				</form>
+</nav>
+
+<div class="container">   
+<div class="row">
+<div class="col-sm-9">
+<% for(var j=0; j < productList.length; j++) { %>	 
+    <div class="col-sm-4">
+      <div class="panel panel-primary">
+        <div class="panel-heading"><%= productList[j].PRODUCT_NAME %><br><%= productList[j].PRODUCT_DESCRIPTION %></div>
+        <div class="panel-body"><a href='' ng-click="displayIndividualProduct('<%=productList[j].PRODUCT_ID  %>','<%=productList[j].PRODUCT_NAME  %>','<%=productList[j].PRODUCT_PRICE  %>','<%=productList[j].PRODUCT_QTY  %>','<%=productList[j].PRODUCT_DESCRIPTION  %>','<%=productList[j].PROD_CAT  %>','<%=productList[j].PRODUCT_AVG_RATINGS  %>','<%=productList[j].FARMER_ID  %>');"><img src=".\images\333.jpg" class="img-responsive" style="width:50%" alt="Image">Supplied By: <%= productList[j].FIRST_NAME %></a></div>		                       
+        <div class="panel-footer"> 
+        	<% if(productList[j].PRODUCT_QTY > 0) { %>
+        	Qty (lb):
+        	<select name="productQuantity" ng-model="productQuantity" required >
+        	<% for(var k=0; k < productList[j].PRODUCT_QTY; k++) { %>         		  	
+        	<option value="<%= (k+1) %><%= productList[j].PRODUCT_ID %>"><%= (k+1) %></option>
+        	<% } %> 
+        	</select>
+        		<% if(productList[j].PRODUCT_QTY < 6) { %>
+        		&nbsp;: Only <%= productList[j].PRODUCT_QTY %> in stock 		
+        		<% } %> <br/>
+        	<button ng-click="addProductToCart('<%=productList[j].PRODUCT_ID  %>','<%=productList[j].PRODUCT_NAME  %>','<%=productList[j].PRODUCT_PRICE  %>','<%=productList[j].FARMER_ID  %>');"><%= productList[j].PRODUCT_PRICE %>$ per lb</button>
+        	<% } else { %>
+        	<font color = "red">Out of stock</font>
+        	<br/><br/>
+        	<% } %>       	       	   	
+        </div>	
+      </div>
+    </div>
+<% } %> 
+</div>
+
+<div class="col-sm-3">
+Items in Cart <br/>
+<% if(addToCartDisplayP.length > 0 ) { %>
+<table border = "1">
+<tr>
+<th>Name</th><th>Price</th><th>Quantity(lb)</th>
+</tr>
+<% for(var j=0; j < addToCartDisplayP.length; j++) { %>
+<tr>
+<td><%= addToCartDisplayP[j].productName %></td>
+<td><%= addToCartDisplayP[j].productPrice %></td>
+<td><%= addToCartDisplayP[j].productQuantity %></td>
+</tr>
+<% } %> 
+</table>
+<% } else { %>
+<b>Empty Cart</b>
+<% } %>
+
+</div>
+</div><br>
+<br><br>
+
+
+
+<footer class="container-fluid text-center">
+  <p>AmzonFresh Copyright</p>  
+  <form class="form-inline">Get deals:
+    <input type="email" class="form-control" size="50" placeholder="Email Address">
+    <button type="button" class="btn btn-danger">Sign Up</button>
+  </form>
+</footer>
+	
+</body>
+</html>

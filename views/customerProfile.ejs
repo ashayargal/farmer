@@ -1,0 +1,245 @@
+<html ng-app="amazon">
+<head>
+<title>Customer's Home page</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script
+	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script
+	src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+  <style>
+    /* Remove the navbar's default rounded borders and increase the bottom margin */ 
+  body {
+	  padding-top=100px
+  }  
+  .navbar {
+      margin-bottom: 50px;
+      border-radius: 0;
+    }
+        /* Remove the jumbotron's default bottom margin */ 
+     .jumbotron {
+      margin-bottom: 0;
+    }
+   
+    /* Add a gray background color and some padding to the footer */
+    footer {
+	  background-color: #f2f2f2;
+      padding: 25px;
+    }
+    .panel-heading1 {
+    	background-color: #31b404;
+    	border-color: #31b404;
+    	color: #fff;
+    	padding:10px 15px;border-bottom:1px solid transparent;border-top-left-radius:3px;border-top-right-radius:3px
+	}
+	
+	.panel-heading1:hover{
+		background-color: #01DF01
+	}
+    
+.button {
+    background-color: #31b404; /* blue */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+.button:hover {background-color: #01DF01}
+
+.button:active {
+  background-color: #0000FF;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+</style>
+  </style>
+  <script src="/scripts/ng-map.min.js"></script>
+<script src="/angularjs/amazonStart.js"></script>
+<script src="/angularjs/customerProfileController.js"></script>
+</head>
+<body ng-controller="customerProfileController" style="padding-top: 120px">
+<nav class="navbar navbar-inverse navbar-fixed-top" >
+<div class="container-fluid">
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>                        
+    </button>
+    <a href='/'>
+   <img src=".\images\logo1.png" height="60" width="100" alt="Image">
+  </a>
+   </div>
+  <div class="collapse navbar-collapse" id="myNavbar">
+    <ul class="nav navbar-nav">
+    <li> <a href='#'> Home</a> </li>
+    <li> <a href='#'>Reviews</a> </li>
+    <li> <a href='#'>orders</a> </li> 
+		
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+    <li><a href="deleteCustomer">Deactivate My Account</a></li>
+    <li><a href ='#'>Contact Us</a></li>
+    <li><a href='/'> Logout</a></li>
+    </ul>
+  </div>
+</div>
+
+<form class="navbar-form navbar-left btn-block"  role="search" width='100%'style="width:100%" >
+<div class="form-group input-group " style="width: inherit; margin-left:65px; margin-right:65px">
+	<input type="text" class="form-control" placeholder="Search Farmer&#39;s Market" >
+	<span class="input-group-btn">
+		<button class="btn btn-default" type="button">
+			Go</span>
+		</button>
+	</span>
+</div>
+
+</form>
+
+				</nav>
+
+<div class="container" style="padding:20px; margin:40px">   
+<div class="row">
+<div class="col-sm-4">
+<div class='well'>
+<div class="profile-sidebar">
+<div align="center">
+<img src=".\images\peter.jpg" class="img-responsive" style="width:50%; border-radius: 50%" alt="Image">
+
+<div >
+	<div style="color: #5a7391;font-size: 16px;font-weight: 600;margin-bottom: 7px;">
+		Customer 1
+	</div>
+	<div class="profile-usertitle-job">
+		Customer
+	</div>
+</div>
+</div>
+<div class="profile-userbuttons">
+	<button  type="button" class="btn btn-primary btn-sm col-sm-6">Follow</button>
+	<button type="button" class="btn btn-danger btn-sm col-sm-6">Message</button>
+</div>
+
+<div style="margin-top:50px">
+	<ul class="nav">
+		<li class="active">
+			<a href="#">
+			<i class="glyphicon glyphicon-home"></i>
+			Overview </a>
+		</li>
+		<li>
+			<a href="#">
+			<i class="glyphicon glyphicon-user"></i>
+			Account Settings </a>
+		</li>
+		<li>
+			<a href="#" target="_blank">
+			<i class="glyphicon glyphicon-ok"></i>
+			Reviews </a>
+		</li>
+		<li>
+			<a href="#">
+			<i class="glyphicon glyphicon-flag"></i>
+			Order History </a>
+		</li>
+	</ul>
+</div>
+<!-- END MENU -->
+</div>
+</div>
+</div>
+<div class="col-sm-6">
+<% for(var j=0; j < productList.length; j++) { %>	 
+    <div class="col-sm-5" align="center">
+      <div class="panel panel-primary">
+        <div class="panel-heading1"><b><%= productList[j].PRODUCT_NAME %></b><br><h2><%= productList[j].PRODUCT_PRICE %>$/lb </h2></div>
+        <div class="panel-body" style="font-color:#000000;"><a href='' ng-click="displayIndividualProduct('<%=productList[j].PRODUCT_ID  %>','<%=productList[j].PRODUCT_NAME  %>','<%=productList[j].PRODUCT_PRICE  %>','<%=productList[j].PRODUCT_QTY  %>','<%=productList[j].PRODUCT_DESCRIPTION  %>','<%=productList[j].PROD_CAT  %>','<%=productList[j].PRODUCT_AVG_RATINGS  %>','<%=productList[j].FARMER_ID  %>');"><img src=".\images\333.jpg" class="img-responsive" style="width:50%" alt="Image">Supplied By: <%= productList[j].FIRST_NAME %></a></div>		                       
+        <div class="panel-footer"> 
+        	<% if(productList[j].PRODUCT_QTY > 0) { %>
+        	Qty (lb):
+        	<select name="productQuantity" ng-model="productQuantity" required >
+        	<% for(var k=0; k < productList[j].PRODUCT_QTY; k++) { %>         		  	
+        	<option value="<%= (k+1) %><%= productList[j].PRODUCT_ID %>"><%= (k+1) %></option>
+        	<% } %> 
+        	</select>
+        		<% if(productList[j].PRODUCT_QTY < 6) { %>
+        		&nbsp;: Only <%= productList[j].PRODUCT_QTY %> in stock 		
+        		<% } %> <br/><br/>
+        	<button class="button btn-block" ng-click="addProductToCart('<%=productList[j].PRODUCT_ID  %>','<%=productList[j].PRODUCT_NAME  %>','<%=productList[j].PRODUCT_PRICE  %>','<%=productList[j].FARMER_ID  %>');">Add to Cart</button>
+        	<% } else { %>
+        	<font color = "red">Out of stock</font>
+        	<br/><br/>
+        	<% } %>       	       	   	
+        </div>	
+      </div>
+    </div>
+<% } %> 
+</div>
+
+<div class="col-sm-2">
+
+<% if(addToCartDisplayP.length > 0 ) { %>
+Items in Cart <br/>
+<table border = "1">
+<tr>
+<th>Name</th><th>Price</th><th>Quantity(lb)</th>
+</tr>
+<% for(var j=0; j < addToCartDisplayP.length; j++) { %>
+<tr>
+<td><%= addToCartDisplayP[j].productName %></td>
+<td><%= addToCartDisplayP[j].productPrice %></td>
+<td><%= addToCartDisplayP[j].productQuantity %></td>
+</tr>
+<% } %> 
+</table>
+<% } %><br/><br/>
+<button class="button btn-" type="button" ng-click="checkout();">
+								Checkout
+							</button> 
+</div>
+</div><br>
+</div>
+
+<div id="footer" >
+<footer >
+<section id="contact" class="map">
+    <div class="container" style="color: black">
+        <div class="row">
+            <div class="col-lg-10 col-lg-offset-1 text-center">
+            
+                <h4><strong>An Initiative By</strong>
+                </h4>
+                <img src=".\images\logo.png"/>
+                <p>Perpetual Coding Squad<br>101 San Fernando CA,95112</p>
+                <ul class="list-unstyled">
+                    <li><i class="fa fa-phone fa-fw"></i> (123) 456-7890</li>
+                    <li><i class="fa fa-envelope-o fa-fw"></i>  <a href="#">PCS@gmail.com</a>
+                    </li>
+                </ul>
+                <br>
+                
+                <hr class="small">
+                <p class="text-muted">Copyright &copy; Perpetual Coding Squad</p>
+            </div>
+        </div>
+    </div>
+    </section>
+</footer>
+</div>
+</body>
+</html>
