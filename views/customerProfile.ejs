@@ -3,6 +3,7 @@
 <title>Customer's Home page</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="./stylesheets/table.css" type="text/css" />
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
@@ -80,10 +81,8 @@
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>                        
     </button>
-    <a href='/'>
    <img src=".\images\logo1.png" height="60" width="100" alt="Image">
-  </a>
-   </div>
+  </div>
   <div class="collapse navbar-collapse" id="myNavbar">
     <ul class="nav navbar-nav">
     <li> <a href='#'> Home</a> </li>
@@ -94,7 +93,6 @@
     <ul class="nav navbar-nav navbar-right">
     <li><a href="deleteCustomer">Deactivate My Account</a></li>
     <li><a href ='#'>Contact Us</a></li>
-    <li><a href='/'> Logout</a></li>
     </ul>
   </div>
 </div>
@@ -193,24 +191,31 @@
 
 <div class="col-sm-2">
 
-<% if(addToCartDisplayP.length > 0 ) { %>
-Items in Cart <br/>
-<table border = "1">
-<tr>
-<th>Name</th><th>Price</th><th>Quantity(lb)</th>
-</tr>
-<% for(var j=0; j < addToCartDisplayP.length; j++) { %>
-<tr>
-<td><%= addToCartDisplayP[j].productName %></td>
-<td><%= addToCartDisplayP[j].productPrice %></td>
-<td><%= addToCartDisplayP[j].productQuantity %></td>
-</tr>
-<% } %> 
-</table>
-<% } %><br/><br/>
-<button class="button btn-" type="button" ng-click="checkout();">
-								Checkout
-							</button> 
+<% if(addToCartDisplayP.length > 0 ) { %> <font color="#31b404">Items
+					in Cart </font><br />
+				<div class="CSS_Table_Example" style="width: 200px; height: 100px;">
+					<table border="1">
+						<tr>
+							<td>Name</td>
+							<td>Price</td>
+							<td>Qty(lb)</td>
+						</tr>
+						<% for(var j=0; j < addToCartDisplayP.length; j++) { %>
+						<tr>
+							<td><%= addToCartDisplayP[j].productName %></td>
+							<td><%=
+								(addToCartDisplayP[j].productPrice*constant).toFixed(2) %></td>
+
+							<td><%= addToCartDisplayP[j].productQuantity %></td>
+						</tr>
+						<% } %>
+					</table>
+				</div>
+				<% } %><br />
+				<br /> <% if(addToCartDisplayP.length > 0 ) { %>
+				<button class="button" type="button" ng-click="checkout();">
+					Checkout</button>
+				<% } %>
 </div>
 </div><br>
 </div>
